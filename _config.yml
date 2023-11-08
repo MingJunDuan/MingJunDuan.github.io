@@ -1,12 +1,12 @@
 # Site settings
-title:          Rain
+title:          MingJunDuan的博客
 description:    "Rain is a simple and clean Jekyll theme with focus on content."
-url:            https://github.com/inelaah/rain
+url:            https://github.com/MingJunDuan
 
 # Author
 author:
   name:         Inela Avdic Hukic
-  email:        inelaah@gmail.com
+  email:        dmj1161859184@126.com
   url:          https://inelaah.com
 
 # Build settings
@@ -34,7 +34,7 @@ related_posts_section:
 
 # Links to social media
 social:
-  email: inelaah@gmail.com
-  github: https://github.com/inelaah
-  twitter: https://twitter.com
+  email: dmj1161859184@126.com
+  github: https://github.com/MingJunDuan
+  twitter: https://twitter.com/MingjunD
   linkedin: https://ba.linkedin.com/in/inela-avdic-hukic-322354131
