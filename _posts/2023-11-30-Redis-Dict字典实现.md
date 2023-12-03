@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Redis-dict字典实现"
+title: "Redis-Dict字典实现"
 author: "Inela"
 ---
 
