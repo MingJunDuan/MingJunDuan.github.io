@@ -162,6 +162,90 @@ author: "Inela"
   }
 ```
 
+Jedis收到MOVED响应后，刷新本地槽位信息缓存的实现如下，获取当前池Pool中的所有Redis节点，之后给Redis节点发送Slots命令，获取集群的状态信息，刷新本地的槽位-节点映射关系
+
+​	#JedisClusterInfoCache.java
+
+```
+public void renewClusterSlots(Jedis jedis) {
+  //If rediscovering is already in process - no need to start one more same rediscovering, just return
+  if (!rediscovering) {
+    try {
+      w.lock();
+      rediscovering = true;
+
+      if (jedis != null) {
+        try {
+          discoverClusterSlots(jedis);
+          return;
+        } catch (JedisException e) {
+          //try nodes from all pools
+        }
+      }
+
+			//1.getShuffledNodesPool()获取当前持有的Pool中的Redis节点
+      for (JedisPool jp : getShuffledNodesPool()) {
+        try {
+          jedis = jp.getResource();
+          //2.获取池Pool对应的Redis节点信息
+          discoverClusterSlots(jedis);
+          return;
+        } catch (JedisConnectionException e) {
+          // try next nodes
+        } finally {
+          if (jedis != null) {
+            jedis.close();
+          }
+        }
+      }
+    } finally {
+      rediscovering = false;
+      w.unlock();
+    }
+  }
+}
+
+private void discoverClusterSlots(Jedis jedis) {
+	//3.发送SLOTS命令给节点，获取当前集群的状态信息，里面含槽位信息和对应的节点
+  List<Object> slots = jedis.clusterSlots();
+  this.slots.clear();
+
+  for (Object slotInfoObj : slots) {
+    List<Object> slotInfo = (List<Object>) slotInfoObj;
+
+    if (slotInfo.size() <= MASTER_NODE_INDEX) {
+      continue;
+    }
+
+    List<Integer> slotNums = getAssignedSlotArray(slotInfo);
+
+    // hostInfos
+    List<Object> hostInfos = (List<Object>) slotInfo.get(MASTER_NODE_INDEX);
+    if (hostInfos.isEmpty()) {
+      continue;
+    }
+
+    // at this time, we just use master, discard slave information
+    HostAndPort targetNode = generateHostAndPort(hostInfos);
+    //4.将槽位slot-节点映射写入Map中
+    assignSlotsToNode(slotNums, targetNode);
+  }
+}
+
+public void assignSlotsToNode(List<Integer> targetSlots, HostAndPort targetNode) {
+    w.lock();
+    try {
+      JedisPool targetPool = setupNodeIfNotExist(targetNode);
+      for (Integer slot : targetSlots) {
+        slots.put(slot, targetPool);
+      }
+    } finally {
+      w.unlock();
+    }
+}
+
+```
+
 
 
 参考：
