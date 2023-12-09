@@ -18,7 +18,7 @@ author: "Inela"
 3. 如果Redis Cluster返回MOVED、ASK命令，底层是抛出异常，而后捕获到，如果是MOVED命令则刷新本地的槽位信息(发送slots命令给Redis节点)，这时槽位对应的node可能变了，再次从本地缓存中槽位对应的node进行请求。
 4. 如果是ASK命令，则请求ASK命令携带的目标节点B，使用的是ASKING命令发送到B，之后再次将业务命令发送到B节点
 
-![Jedis MOVED ASK ASKING命令处理](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2023-11-30/Jedis-MOVED-ASK-ASKING命令处理.png)
+![Jedis MOVED ASK ASKING命令处理](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2023-12-08/Jedis-MOVED-ASK-ASKING命令处理.png)
 
 
 
