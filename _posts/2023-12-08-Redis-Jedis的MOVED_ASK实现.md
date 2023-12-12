@@ -246,6 +246,9 @@ public void assignSlotsToNode(List<Integer> targetSlots, HostAndPort targetNode)
 
 ```
 
+​	如果当前节点正在迁出槽位，并且命令中的key有的已经不再当前节点中了，则设置错误码为REDIS_CLUSTER_REDIR_ASK，并返回该槽位所迁出的目的地节点；
+
+​    如果当前节点正在迁入槽位，并且客户端具有ASKING标记（客户端之前发来过”ASKING”命令）或者该命令本身就具有ASKING标记（”RESTORE-ASKING”命令），则只有在涉及多个key，并且有的key不在当前节点中的情况下，才设置错误码为REDIS_CLUSTER_REDIR_UNSTABLE，并返回NULL；否则，返回当前节点；	
 
 
 参考：
