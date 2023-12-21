@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2023-12-21-Linux的fork()/vfork()/clone()"
+title: "Linux的fork()/vfork()/clone()"
 author: "Inela"
 ---
 ​	Redis中通过fork子进程来进行RDB备份，为什么使用fork()呢.
@@ -29,6 +29,7 @@ author: "Inela"
 The fork(),vfork() and clone() all call the do_fork() to do the real work, but with different parameters.
 ```
 
+​	Redis中RDB备份，主要是备份内存中的数据，使用fork()创建子进程，子进程在可以遍历/访问父进程的内存变量数据，而父进程在做修改时，由于Copy on write，子进程拿到的是副本数据，从底层操作系统层面高效实现了期望的功能.
 
 
 参考：
