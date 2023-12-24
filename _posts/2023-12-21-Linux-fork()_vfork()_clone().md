@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux的fork()/vfork()/clone()"
+title: "Linux-fork()/vfork()/clone()"
 author: "Inela"
 ---
 ​	Redis中通过fork子进程来进行RDB备份，为什么使用fork()呢.
