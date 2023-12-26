@@ -3,9 +3,8 @@ layout: post
 title: "Redis-源码解析：数据库redisDb实现"
 author: "Inela"
 ---
-​## [Redis 源码解析 1：数据库 redisDb]
- 
- ## 服务器中的数据库
+
+# 服务器中的数据库
  
  Redis 服务器将绝大部分的信息都保存在 `server.h/redisServer`。redis 的数据是保存在 `redisServer` 中的 `redisDb` 结构中。
  
@@ -27,7 +26,7 @@ author: "Inela"
  
  
  
- ## 数据库键空间
+# 数据库键空间
  
  Redis 是一个键值对数据库服务器，服务器中的每个数据库都由一个 `server.h/redisDb` 结构表示.
  其中，`redisDb` 的 `dict` 字典属性保存了数据库中的所有键值对，我们将这个字典称为键空间（key space）：
@@ -76,7 +75,7 @@ author: "Inela"
  
  从上面的示例图可以很清晰地知道 Redis 数据是如何组织的，增删改查也就是对 dict 的操作而已
  
- ## Key 的过期时间
+# Key 的过期时间
  
  ### 1. 数据结构
  
@@ -173,7 +172,7 @@ author: "Inela"
  
  
  
- ## 总结
+# 总结
  
  redis中所有key都存储在redisDB的dict字典中，增删改查也就是对 dict 的操作而已，而对于设置了expire过期时间的key来说，在expire字段(字典类型)中也存储了该字段，value是过期时间(时间戳类型)。
  
