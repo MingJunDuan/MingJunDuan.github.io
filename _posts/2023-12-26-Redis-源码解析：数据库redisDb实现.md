@@ -58,7 +58,7 @@ author: "Inela"
  - dict 的 key 就是数据库中的 key，字符串类型
  - dict 的 值 就是数据库中的 值，这个值可以是 `string`、`hash`、`zset`、`set`、`list` 中的任何一种
  
- ### 示例
+### 示例
  
  如果我们在数据库中，执行以下命令：
  
@@ -77,7 +77,7 @@ author: "Inela"
  
 # Key 的过期时间
  
- ### 1. 数据结构
+### 1. 数据结构
  
  redisDb 中的 `expires` 属性保存了存放已设置exptime的key的集合的过期时间，我们姑且就称它为**过期字典**吧。
  
@@ -115,11 +115,11 @@ author: "Inela"
  
  ![redisDB的key过期时间](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2023-12-26/redisDB的key过期时间.png)
  
- ### 2. 过期 key 的删除策略
+### 2. 过期 key 的删除策略
  
  一个 key 过期时间到了之后，是如何进行删除的呢？Redis 使用了一下两种策略：惰性删除、定期删除
  
- #### 惰性删除[](https://www.cnblogs.com/chenchuxin/p/14187898.html#惰性删除)
+#### 惰性删除[](https://www.cnblogs.com/chenchuxin/p/14187898.html#惰性删除)
  
  惰性删除策略指的是：key 在过期之后，没有立即删除，而是在读写 key 的时候，才对过期的 key 进行删除。
  代码实现在 `db.c/expireIfNeeded` 方法中。所有 key 的读写之前，都会先调用 `expireIfNeeded` 对 key 进行检查，如果已过期，则删除。
@@ -155,9 +155,7 @@ author: "Inela"
  }
  ```
  
- 
- 
- #### 定期删除
+#### 定期删除
  
  定期删除策略指的是：Redis 每隔一段时间，随机从数据库中取出一定量的 key 进行检查，如果已过期，则进行删除。
  代码实现在 `expire.c/activeExpireCycle` 方法中。
