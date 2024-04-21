@@ -195,11 +195,11 @@ final <S> boolean uniApply(CompletableFuture<S> a,
 
 ​	最终形成的有依赖关系的图如下：
 
-![CompletableFuture1](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2023-12-26/CompletableFuture1.png)
+![CompletableFuture1](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2024-04-21/CompletableFuture1.png)
 
 ​	Debug的图
 
-![CompletableFuture1单元测试结果](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2023-12-26/CompletableFuture1单元测试结果.png)
+![CompletableFuture1单元测试结果](https://github.com/MingJunDuan/mingjunduan.github.io/raw/main/images/mjduan/2024-04-21/CompletableFuture1单元测试结果.png)
 
 ​	当执行到单元测试的base.complete("1")时候，也就是complete方法，实现如下：
 
