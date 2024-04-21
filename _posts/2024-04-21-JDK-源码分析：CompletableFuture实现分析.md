@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2024-04-21-JDK-源码分析：CompletableFuture实现分析"
+title: "JDK-源码分析：CompletableFuture实现分析"
 author: "Inela"
 ---
 
