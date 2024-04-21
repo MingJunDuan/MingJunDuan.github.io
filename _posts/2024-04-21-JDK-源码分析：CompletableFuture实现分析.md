@@ -1,3 +1,9 @@
+---
+layout: post
+title: "2024-04-21-JDK-源码分析：CompletableFuture实现分析"
+author: "Inela"
+---
+
 ​	CompletableFuture是Doug Lea在JDK1.8引入的，解决了FutureTask阻塞调用、多个Task依赖处理的痛点。
 
 ​	CompletableFuture源码中下面两个核心的关键属性result和stack，关于这两个属性也有核心的注释，result可能是返回的结果集，也可能是包装的AltResult，stack这个属性暴露出了CompletableFuture的整体的结构是一个栈。
